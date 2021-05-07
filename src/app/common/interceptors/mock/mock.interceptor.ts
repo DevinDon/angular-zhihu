@@ -9,6 +9,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { mock } from 'mockjs';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Answer, AnswerID, AnswerStatus, Question, QuestionID, ResourceType, UserID } from '../../interfaces';
 import { Link, mockAnswer, mockQuestion, mockSearch, mockUser, mockVote } from '../../utils';
 
@@ -34,7 +35,7 @@ export class MockInterceptor implements HttpInterceptor {
     const link = new Link(request.urlWithParams);
     const { resource, id } = link;
 
-    if (isDevMode()) {
+    if (isDevMode() && environment.mock) {
       const body = this.adapt(request, link) || this.data[resource](id, link);
       return of(new HttpResponse({ body }))
         .pipe(
