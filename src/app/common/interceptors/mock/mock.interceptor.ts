@@ -3,9 +3,9 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
+  HttpResponse
 } from '@angular/common/http';
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { mock } from 'mockjs';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class MockInterceptor implements HttpInterceptor {
     const link = new Link(request.urlWithParams);
     const { resource, id } = link;
 
-    if (isDevMode() && environment.mock) {
+    if (environment.mock) {
       const body = this.adapt(request, link) || this.data[resource](id, link);
       return of(new HttpResponse({ body }))
         .pipe(
